@@ -16,7 +16,7 @@ report:
 	pandoc report/report.Rmd -s -o report/report.pdf
 
 session:
-	Rscript code/functions/session-info-script.R
+	Rscript code/scripts/session-info-script.R
 
 clean:
 	rm report/report.pdf
