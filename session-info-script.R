@@ -1,7 +1,0 @@
-sink('session-info.txt')
-library(testthat)
-library(xtable)
-library(rmarkdown)
-library(knitr)
-sessioninfo()
-sink()
