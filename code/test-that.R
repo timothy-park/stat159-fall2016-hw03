@@ -1,4 +1,4 @@
-source('../functions.R')
+source('code/functions/regression-functions.R')
 
 context('Testing for regression statistics on mtcars dataset')
 test_that('Regression outputs work as expected', {

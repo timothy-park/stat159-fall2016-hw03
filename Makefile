@@ -3,15 +3,20 @@
 data:
 	curl -o data/Advertising.csv http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv
 
-#tests
+tests:
+	Rscript code/test-that.R 
 
 eda:
-	Rscript code/eda-script.R data/Advertising.csv
+	Rscript code/scripts/eda-script.R data/Advertising.csv
 
 regression:
-	Rscript code/regression-script.R data/Advertising.csv
+	Rscript code/scripts/regression-script.R data/Advertising.csv
 
-# report
+report:
+	pandoc report/report.Rmd -s -o report/report.pdf
+
+session:
+	Rscript code/functions/session-info-script.R
 
 clean:
 	rm report/report.pdf

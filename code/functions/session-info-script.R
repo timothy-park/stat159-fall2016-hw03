@@ -1,0 +1,7 @@
+sink('../../session-info.txt')
+library(testthat)
+library(knitr)
+library(rmarkdown)
+library(xtable)
+sessionInfo()
+sink()
