@@ -13,7 +13,7 @@ regression:
 	Rscript code/scripts/regression-script.R data/Advertising.csv
 
 report:
-	pandoc report/report.Rmd -s -o report/report.pdf
+	Rscript -e 'library(rmarkdown); render("report/report.Rmd")'
 
 session:
 	Rscript code/scripts/session-info-script.R
