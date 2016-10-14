@@ -9,5 +9,5 @@ test_that('Regression outputs work as expected', {
   expect_equal(total_sum_squares(reg), sum((mtcars$mpg - mean(mtcars$mpg))^2))
   expect_equal(residual_std_error(reg), regsum$sigma)
   expect_equal(r_squared(reg), regsum$r.squared)
-  expect_equal(f_statistic(reg), regsum$fstatistic[1])
+  expect_equal(f_statistic(reg), unname(regsum$fstatistic[1]))
 })

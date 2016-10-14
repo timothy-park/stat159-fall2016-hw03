@@ -1,28 +1,36 @@
 residual_sum_squares <- function(object) {
-  rss <- sum((object$residuals)^2)
+  residuals <- object$residuals
+  rss <- sum((residuals)^2)
   return(rss)
 }
 
 total_sum_squares <- function(object) {
-  sum <- summary(object)
-  tss <- (sum((sum$residuals)^2))/(1-sum$r.squared)
+  mean_y <- mean(object$model[,1])
+  y <- object$model[,1]
+  tss <- sum((y - mean_y)^2)
   return(tss)
 }
 
+residual_std_error <- function(object) {
+  p <- length(object$coefficients[-1])
+  n <- nrow(object$model)
+  rss <- residual_sum_squares(object)
+  rse <- sqrt(rss/(n-p-1))
+  return(rse)
+}
+
 r_squared <- function(object) {
-  sum <- summary(object)
-  r_s <- sum$r.squared
-  return(r_s)
+  rss <- residual_sum_squares(object)
+  tss <- total_sum_squares(object)
+  r_sq <- 1 - (rss/tss)
+  return(r_sq)
 }
 
 f_statistic <- function(object) {
-  sum <- summary(object)
-  f_stat <- sum$fstatistic
-  return(f_stat[1])
-}
-
-residual_std_error <- function(object) {
-  sum <- summary(object)
-  rse <- sum$sigma
-  return(rse)
+  p <- length(object$coefficients[-1])
+  n <- nrow(object$model)
+  rss <- residual_sum_squares(object)
+  tss <- total_sum_squares(object)
+  f_stat <- ((tss-rss)/p)/(rss/(n-p-1))
+  return(f_stat)
 }
