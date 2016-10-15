@@ -6,10 +6,10 @@ output: pdf_document
 ---
 
 ## Abstract
-The purpose of assignment is to extend the scope of simple regression with one predictor to multiple regression with many predictors. This analysis will reproduce the regression performed in Section 3.2 from the book, "An Introduction to Statistical Learning" (by James et al).
+The purpose of this assignment is to extend the scope of simple regression with one predictor to multiple regression with many predictors. This analysis will reproduce the regression performed in Section 3.2 from the book, "An Introduction to Statistical Learning" (by James et al).
 
 ## Introduction
-Using the Advertising data set, Sales will be regressed onto the Advertising mediums (TV, Radio, and Newspaper) via the linear model. A simple regression onto each predictor is not sufficient enough to provide evidence of an association between the response and specific predictors. A multiple regression will include all predictors into one linear equation and will more accurately predict the response Sales. In this project, both simple and multiple regression will be fit onto the data set, and a comparison of the two models will be analyzed.
+Using the Advertising data set, Sales will be regressed onto the Advertising mediums (TV, Radio, and Newspaper) via the linear model. A simple regression onto each predictor is not sufficient enough to provide evidence of an association between the response and specific predictors. A multiple regression will include all predictors into one linear equation and will more accurately predict the response Sales. In this project, both simple and multiple regression will be fit onto the data set, and a comparison of the two models will be done.
 
 ```{r,echo=FALSE}
 library(xtable)
@@ -21,7 +21,7 @@ source('../code/functions/regression-functions.R')
 ```
 
 ## Data
-The Advertising data set consists of Sales (in thousands of units) in 200 different markets, along with advertising budgets for the product in each of those markets for three different media: TV, radio, and newspaper. In this analysis, we will look into the relationship between product Sales and all advertising budgets.
+The Advertising data set consists of Sales (in thousands of units) in `200` different markets, along with advertising budgets for the product in each of those markets for three different media: TV, radio, and newspaper. In this analysis, we will look into the relationship between product Sales and all advertising budgets.
 
 Before performing a linear regression on the data set, it is important to look at some plots of the variables.
 
@@ -29,19 +29,19 @@ Before performing a linear regression on the data set, it is important to look a
 knitr::include_graphics("../images/histogram-sales.png")
 ```
 
-The histogram of sales looks approximately normal, ignoring the fact that there are only 200 observations.
+The histogram of sales looks approximately normal, ignoring the fact that there are only `200` observations.
 
 ```{r, out.width = "200px", echo=FALSE,message=FALSE, fig.align ='center'}
 knitr::include_graphics("../images/histogram-tv.png")
 ```
 
-The histogram of TV advertising appears to be uniform as a whole. There are equal frequencies in TV budget choices for all the 200 markets.
+The histogram of TV advertising appears to be uniform as a whole. There are approximately equal frequencies in TV budget choices for all the `200` markets.
 
 ```{r, out.width = "200px", echo=FALSE, message=FALSE, fig.align='center'}
 knitr::include_graphics("../images/histogram-radio.png")
 ```
 
-The histogram of radio advertising looks a little skewed to the right but can be assumed to follow a uniform frqeuncy, implying that only some of the markets prefer to allocate their budget away from radio and more to the other advertising mediums.
+The histogram of radio advertising looks a little skewed to the right but can be assumed to follow a uniform frequency, implying that only some of the markets prefer to allocate their budget away from radio and more to the other advertising mediums.
 
 ```{r, out.width = "200px", echo=FALSE, message=FALSE, fig.align='center'}
 knitr::include_graphics("../images/histogram-newspaper.png")
@@ -61,23 +61,24 @@ $$Sales = \beta_0 + \beta_1TV + \beta_2Radio + \beta_3Newspaper$$
 
 Regression plots and their statistics will be shown and evaluated in the next section, and it will be shown that the regression incorporating all the predictors proves to be a better fit to the Advertising data set and thus a better predictive model for Sales.
                          
-For each model, using the least squares criterion, estimates of the beta coefficients are calculated to form a fitted regression line from the given n = 200 observations. The sum of residuals in each regressed model will be calculated, and to corresponding statistics will be calculated to properly assess the accuracy of the model (i.e. t-test, F-test).
+For each model, using the least squares criterion, estimates of the beta coefficients are calculated to form a fitted regression line from the given `n = 200` observations. The sum of residuals in each regressed model and useful statistics will be calculated to properly assess the accuracy of the model (i.e. t-test, F-test).
 
 ## Results
 The following tables present the results of simple linear regressions on each of the predictor variables. The beta coefficients as well as their t-statistics with their converted p-values are shown.
+
 ```{r,echo=FALSE,results='asis', message=FALSE}
 tv.sum <- summary(tv.fit)
 xtable(tv.sum$coefficients, caption = 'Simple linear regression of Sales onto TV')
 ```
 
-The estimated beta coefficients for the TV predictor identifies a strong association with the response variable, Sales. The absolute value of the estimation is small, but it is proper to look at the normalized estimations by dividing the coefficient by its standard error, which is equal to the t-statistic. Since the t-statistic is high, the p-value is considerably low enough to reject the null hypthesis that there is no association between the response and the predictor. Thus, it is comfortable to state a strong dependence on TV to increase Sales. This conclusion is supported by the previous statements, emphasizing how the height of TV advertising frequencies is the highest out of all the predictors, so TV's influence is the strongest.
+The estimated beta coefficient for the TV predictor identifies a strong association with the response variable, Sales. The absolute value of this estimation is small, but it is proper to look at the normalized estimations by dividing the coefficient by its standard error, which is equal to the t-statistic. Since the t-statistic is high, the p-value is considerably low enough to reject the null hypothesis that there is no association between the response and the predictor. Thus, it is comfortable to state a strong dependence on TV to increase Sales. This conclusion is supported by the previous statements, emphasizing how the height of TV advertising frequencies of the histogram is the highest out of all the predictors, so TV's influence is the strongest.
 
 ```{r,echo=FALSE,results='asis', message=FALSE}
 radio.sum <- summary(radio.fit)
 xtable(radio.sum$coefficients, caption = 'Simple linear regression of Sales onto Radio')
 ```
 
-The beta coefficient relating to the Radio predictor also has a p-value low enough to reject the null hypthesis, which assumes the t-distribution. Thus, there is an association between Radio and Sales but not as strong as the association between TV and Sales.
+The beta coefficient relating to the Radio predictor also has a p-value low enough to reject the null hypthesis, which assumes the t-distribution. Thus, there is an association between Radio and Sales but not as strong as the association between TV and Sales since the t-statistic is lower in this case.
 
 ```{r,echo=FALSE,results='asis', message=FALSE}
 news.sum <- summary(news.fit)
@@ -114,9 +115,9 @@ colnames(table) = c('Quantity', 'Value')
 xtable(table, caption = "Quality Indices of Sales onto TV, Radio and Newspaper Advertising Mediums")
 ```
 
-The residual standard error relative to the scale of the Advertising budgets is low; the accuracy of the prediction onto the data set can be stated as strong due to these small residuals. In addition, the R_squared value is at 0.9, a very high indicator for a strong fit to the Advertising data set. These two quality indices can assure the regressed model to be a strong fit. In some cases, the fit might be a case of overfitting, where the model is so carefully fitted onto the training set that the test error explodes when performed. Since the number of predictors is small in comparison to the number of samples taken from the markets, the multiple regression model is not flexible enough to be considered as an overfitting case. It is safe to assume the model to be a strong fit to the Advertising data set, and thus a strong predictor for Sales.
+The residual standard error relative to the scale of the Advertising budgets is low; the accuracy of the prediction onto the data set can be stated as strong due to these small residuals. In addition, the R_squared value is at `0.9`, a very high indicator for a strong fit to the Advertising data set. These two quality indices can assure the regressed model to be a strong fit. In some cases, the fit might be a case of overfitting, where the model is so carefully fitted onto the training set that the test error explodes when performed. Since the number of predictors is small in comparison to the number of samples taken from the markets, the multiple regression model is not flexible enough to be considered as an overfitting case. It is safe to assume the model to be a strong fit to the Advertising data set, and thus a strong predictor for Sales.
 
-The F-test finds out if at least one of the predictor variables shows a strong assosication with the response variable. This test does not find out which variable(s) has this association, but knowing its existence is important. The large F-statistic of 570 corresponds to a low p-value of the F-test; Therefore, the null hypothesis that assumes the F-distribution is rejected. In other words, at least one of the beta coefficients in the model indicate a strong relationship with Sales. 
+The F-test finds out if at least one of the predictor variables shows a strong assosication with the response variable. This test does not find out which variable(s) has this association, but knowing its existence is important. The large F-statistic of `570` corresponds to a low p-value of the F-test; Therefore, the null hypothesis that assumes the F-distribution is rejected. In other words, at least one of the beta coefficients in the model indicate a strong relationship with Sales. 
 
 Since the estimatated beta coefficient for Newspaper advertising shows a weak association to Sales, omitting the Newspaper variable from the model can be option in order to better the fit. Subset selection (i.e. forward, backward, mixed selection) and incorporating the adjusted R_squared quantity can be used to compare the models with varying number of predictors.
 

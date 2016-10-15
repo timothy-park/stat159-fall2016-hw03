@@ -1,5 +1,8 @@
 url = 'http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv'
 
+# runs the phony targets eda, regression, and report.
+all:  eda regression report
+
 # declaring all the phony targets
 .PHONY: data tests eda regression report clean all
 
@@ -29,5 +32,3 @@ session:
 # cleans the pdf report.
 clean:
 	rm report/report.pdf
-
-all:  eda regression report
