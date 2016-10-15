@@ -65,42 +65,62 @@ For each model, using the least squares criterion, estimates of the beta coeffic
 
 ## Results
 The following tables present the results of simple linear regressions on each of the predictor variables. The beta coefficients as well as their t-statistics with their converted p-values are shown.
-```{r,echo=FALSE,results='asis'}
+```{r,echo=FALSE,results='asis', message=FALSE}
 tv.sum <- summary(tv.fit)
 xtable(tv.sum$coefficients, caption = 'Simple linear regression of Sales onto TV')
 ```
 
 The estimated beta coefficients for the TV predictor identifies a strong association with the response variable, Sales. The absolute value of the estimation is small, but it is proper to look at the normalized estimations by dividing the coefficient by its standard error, which is equal to the t-statistic. Since the t-statistic is high, the p-value is considerably low enough to reject the null hypthesis that there is no association between the response and the predictor. Thus, it is comfortable to state a strong dependence on TV to increase Sales. This conclusion is supported by the previous statements, emphasizing how the height of TV advertising frequencies is the highest out of all the predictors, so TV's influence is the strongest.
 
-```{r,echo=FALSE,results='asis'}
+```{r,echo=FALSE,results='asis', message=FALSE}
 radio.sum <- summary(radio.fit)
 xtable(radio.sum$coefficients, caption = 'Simple linear regression of Sales onto Radio')
 ```
 
 The beta coefficient relating to the Radio predictor also has a p-value low enough to reject the null hypthesis, which assumes the t-distribution. Thus, there is an association between Radio and Sales but not as strong as the association between TV and Sales.
 
-```{r,echo=FALSE,results='asis'}
+```{r,echo=FALSE,results='asis', message=FALSE}
 news.sum <- summary(news.fit)
 xtable(news.sum$coefficients, caption = 'Simple linear regression of Sales onto Newspaper')
 ```
 
 The beta coefficient for the Newspaper predictor shows a low p-value, which rejects the null hypothesis. It is valid to assert a relationship between Newspaper advertising and Sales. However, out of these three simple linear regressions, the beta coefficient for Newspaper seems to have the weakest relationship to the reponse variable. In the next fitted model for multiple regression, this somewhat weak relationship will become apparent.
-
-```{r,echo=FALSE,results = 'asis'}
+```{r,echo=FALSE,results = 'asis', message=FALSE}
 lm.sum <- summary(lm.fit)
 xtable(lm.sum$coefficients, caption = 'Multiple linear regression of Sales onto Three Advertising Mediums')
 ```
 
 When Sales is regressed onto all the advertising mediums, all the t-statistics for the beta coefficients are high except the coefficient for the Newspaper medium. This insignificant p-value suggest that it is not justified to reject the null hypothesis. Thus, though a negative estimated beta coefficient, the Newspaper medium will not show a strong association to the response variable, Sales. 
 
+\newpage
+
 This unique case is caused by a dependency among the predictor variables. When one of the predictors is highly correlated with another predictor via confounding or other causations, the estimated beta coefficients will adjust to this correlation. The following figure displys the correlation matrix, which shows every combination of correlation among the predictors.
 
-```{r,echo=FALSE, results= 'asis'}
+```{r,echo=FALSE, results= 'asis', message=FALSE}
 xtable(corr_mat, caption = 'Correlation matrix of TV, Radio, and Newspaper Advertising Variables')
 ```
 
+Looking at the Sales columns in the correlation matrix, TV has the highest correlation which can also support the claim that this advertising medium has the highest influence on Sales. Ignoring the Sales column, all correlations seems to insignificant except the correlation between the Radio and Newspaper predictors. Since their is a dependency among the predictors, the insignificant p-value in the Newspaper predictor in the multiple regression model can be explained. The low t-statistic in the Newspaper predictor when regressed on multiple variables show that the Newspaper does not directly increase Sales. It is more proper to notice that the increase in Newspaper advertising would bring about a higher in crease in Radio advertising. This indirect effect causes the beta coefficient of the Newspaper medium in both simple and multiple regressions to vary.
+
+The table below presents a standard assessment of the accuracy of the multiple linear regression of Sales onto the three Advertising mediums.
+
+```{r,echo=FALSE, results='asis'}
+table = matrix(nrow = 3, ncol = 2)
+quantities = c("Residual Std Error", "R_Squared", "F-statistic")
+values = c(residual_std_error(lm.fit), r_squared(lm.fit), f_statistic(lm.fit))
+table[,1] = quantities
+table[,2] = values
+colnames(table) = c('Quantity', 'Value')
+xtable(table, caption = "Quality Indices of Sales onto TV, Radio and Newspaper Advertising Mediums")
+```
+
+The residual standard error relative to the scale of the Advertising budgets is low; the accuracy of the prediction onto the data set can be stated as strong due to these small residuals. In addition, the R_squared value is at 0.9, a very high indicator for a strong fit to the Advertising data set. These two quality indices can assure the regressed model to be a strong fit. In some cases, the fit might be a case of overfitting, where the model is so carefully fitted onto the training set that the test error explodes when performed. Since the number of predictors is small in comparison to the number of samples taken from the markets, the multiple regression model is not flexible enough to be considered as an overfitting case. It is safe to assume the model to be a strong fit to the Advertising data set, and thus a strong predictor for Sales.
+
+The F-test finds out if at least one of the predictor variables shows a strong assosication with the response variable. This test does not find out which variable(s) has this association, but knowing its existence is important. The large F-statistic of 570 corresponds to a low p-value of the F-test; Therefore, the null hypothesis that assumes the F-distribution is rejected. In other words, at least one of the beta coefficients in the model indicate a strong relationship with Sales. 
+
+Since the estimatated beta coefficient for Newspaper advertising shows a weak association to Sales, omitting the Newspaper variable from the model can be option in order to better the fit. Subset selection (i.e. forward, backward, mixed selection) and incorporating the adjusted R_squared quantity can be used to compare the models with varying number of predictors.
 
 ## Conclusion
-
+Both the simple and multiple regression models were fitted onto the Advertising data set. After analyzing each model and assessing certain statistics of the fit, the multiple regression model is the better of the two since having more predictors can explain more of the variance in the response Sales. More information about the response would give a high R_squared and low Residual Standard error, or in other words, a better fit. 
 
 
