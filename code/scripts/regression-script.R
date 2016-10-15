@@ -4,21 +4,25 @@ ad <- ad[-1]
 attach(ad)
 head(ad)
 
+tv.fit = lm(Sales ~ TV, data = ad)
+png('images/scatterplot-tv-sales.png')
+plot(TV, Sales, main = 'Sales vs. TV')
+dev.off()
+
+radio.fit <- lm(Sales ~ Radio, data = ad)
+png('images/scatterplot-radio-sales.png')
+plot(Radio, Sales, main = 'Sales vs. Radio')
+dev.off()
+
+news.fit <- lm(Sales ~ Newspaper, data = ad)
+png('images/scatterplot-newspaper-sales.png')
+plot(Newspaper, Sales, main = 'Sales vs. Newspaper')
+dev.off()
+
 lm.fit <- lm(Sales ~ TV + Radio + Newspaper, data = ad)
 summary <- summary(lm.fit)
-save(lm.fit, summary, file = 'data/regression.RData')
+save(lm.fit, tv.fit, radio.fit, news.fit, summary, file = 'data/regression.RData')
 
-png('images/scatterplot-tv-sales.png')
-plot(TV, Sales, main = 'TV vs. Sales')
-dev.off()
-
-png('images/scatterplot-radio-sales.png')
-plot(Radio, Sales, main = 'Radio vs. Sales')
-dev.off()
-
-png('images/scatterplot-newspaper-sales.png')
-plot(Newspaper, Sales, main = 'Newspaper vs. Sales')
-dev.off()
 
 png('images/residual-plot.png')
 plot(lm.fit, 1)
@@ -26,7 +30,7 @@ dev.off()
 
 png('images/normal-qq-plot.png')
 plot(lm.fit, 2)
-dev.off
+dev.off()
 
 png('images/scale-location-plot.png')
 plot(lm.fit, 3)

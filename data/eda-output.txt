@@ -1,4 +1,4 @@
-[1] "Summary Statisticsto of Advertising Variables"
+[1] "Summary Statistics of Advertising Variables"
        TV             Radio          Newspaper          Sales      
  Min.   :  0.70   Min.   : 0.000   Min.   :  0.30   Min.   : 1.60  
  1st Qu.: 74.38   1st Qu.: 9.975   1st Qu.: 12.75   1st Qu.:10.38  
